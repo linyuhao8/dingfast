@@ -1,0 +1,8 @@
+{
+  "name": "api",
+  "scripts": {
+    "dev": "dotnet watch run",
+    "build": "dotnet publish -o dist",
+    "db:migrate": "dotnet ef database update"
+  }
+}

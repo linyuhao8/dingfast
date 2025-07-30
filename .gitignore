@@ -1,0 +1,76 @@
+# =====================
+# Visual Studio / .NET
+# =====================
+
+# Build output
+**/bin/
+**/obj/
+
+# User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Visual Studio upgrade logs
+UpgradeLog.XML
+_UpgradeReport_Files/
+
+# Resharper
+_ReSharper*/
+*.ReSharper*
+
+# NuGet packages (如果你想要追蹤自己的 packages 資料夾，註解掉這行)
+# packages/
+
+# NuGet executables and package outputs
+NuGet.exe
+*.nupkg
+
+# Publish output
+*.Publish.xml
+
+# Test results
+TestResults/
+
+# Logs and databases
+*.log
+*.sqlite
+
+# =====================
+# Node.js / Next.js
+# =====================
+
+node_modules/
+.next/
+dist/
+out/
+logs/
+*.log
+.cache/
+.vscode/
+.idea/
+yarn-error.log
+npm-debug.log
+pnpm-debug.log
+
+# =====================
+# OS generated files
+# =====================
+
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Icon?
+Desktop.ini
+
+# =====================
+# Others / Custom
+# =====================
+
+.turbo/
+
+# 忽略本地的 appsettings.json (如果有需要的話)
+apps/api/appsettings.json
+
+# 你可以根據需要加入其他忽略規則
