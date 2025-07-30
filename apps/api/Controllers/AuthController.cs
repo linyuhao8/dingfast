@@ -23,7 +23,8 @@ public class AuthController : ApiBaseController
         if (!result.Success)
         {
             // 失敗時回傳 ApiResponse 失敗格式
-            return BadRequest(ApiResponse<string>.Fail(result.Message));
+    return BadRequest(ApiResponse<string>.Fail(result.Message ?? "未知錯誤"));
+
         }
 
         var token = result.Data!;
