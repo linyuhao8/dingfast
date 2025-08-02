@@ -23,7 +23,7 @@ npm install -g turbo
 
 ## ⚙️ Step 2: 建立 appsettings 檔案與資料庫設定
 
-進入後端目錄並新增 `appsettings.Development.json`：
+進入後端目錄並新增 `appsettings.json`：
 
 ```bash
 cd apps/api
