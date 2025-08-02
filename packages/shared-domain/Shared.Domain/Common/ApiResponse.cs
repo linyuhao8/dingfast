@@ -15,13 +15,14 @@ public class ApiResponse<T>
     public bool Success { get; set; }
     public T? Data { get; set; }
     public string? Message { get; set; }
-
-    // 🔽 可加上錯誤代碼與詳細訊息
     public int? ErrorCode { get; set; }
     public string? ErrorDetail { get; set; }
 
-    public static ApiResponse<T> Ok(T data) => new() { Success = true, Data = data };
+    // 成功回傳，新增可選 message 參數
+    public static ApiResponse<T> Ok(T data, string? message = null) =>
+        new() { Success = true, Data = data, Message = message };
 
-    public static ApiResponse<T> Fail(string message, int? code = null, string? detail = null) =>
+    // 失敗回傳，message 可為 nullable
+    public static ApiResponse<T> Fail(string? message, int? code = null, string? detail = null) =>
         new() { Success = false, Message = message, ErrorCode = code, ErrorDetail = detail };
 }

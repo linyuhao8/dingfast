@@ -18,7 +18,7 @@ namespace user.Services
         public async Task<ApiResponse<List<User>>> GetAllUsersAsync()
         {
             var users = await _userRepo.GetAllAsync();
-            return ApiResponse<List<User>>.Ok(users);
+            return ApiResponse<List<User>>.Ok(users, "查詢成功");
         }
 
         public async Task<ApiResponse<User>> GetUserByIdAsync(Guid id)
@@ -48,7 +48,7 @@ namespace user.Services
             await _userRepo.AddAsync(user);
             await _userRepo.SaveChangesAsync();
 
-            return ApiResponse<User>.Ok(user);
+            return ApiResponse<User>.Ok(user, "Create User Success");
         }
 
         public async Task<ApiResponse<bool>> UpdateUserAsync(Guid id, UpdateUserDto dto)
