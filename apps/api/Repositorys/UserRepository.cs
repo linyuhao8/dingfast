@@ -14,8 +14,10 @@ namespace user.Repositories
             _context = context;
         }
 
-        public async Task<User?> FindByEmailAsync(string email)
+        public async Task<User?> FindByEmailAsync(string? email)
         {
+            if (string.IsNullOrWhiteSpace(email))
+                return null;  // 沒有 email 就直接回 null，不查資料庫
             return await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
         }
 

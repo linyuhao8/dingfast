@@ -32,6 +32,12 @@ namespace user.Services
 
         public async Task<ApiResponse<User>> CreateUserAsync(CreateUserDto dto)
         {
+            var exists = await _userRepo.FindByEmailAsync(dto.Email);
+            if (exists != null)
+            {
+                return ApiResponse<User>.Fail("Email已被使用", ErrorCodes.ValidationFailed);
+            }
+
             var user = new User
             {
                 Id = Guid.NewGuid(),
@@ -51,11 +57,20 @@ namespace user.Services
             return ApiResponse<User>.Ok(user, "Create User Success");
         }
 
-        public async Task<ApiResponse<bool>> UpdateUserAsync(Guid id, UpdateUserDto dto)
+        public async Task<ApiResponse<User>> UpdateUserAsync(Guid id, UpdateUserDto dto)
         {
             var existingUser = await _userRepo.GetByIdAsync(id);
             if (existingUser == null)
-                return ApiResponse<bool>.Fail("找不到使用者", 404);
+                return ApiResponse<User>.Fail("找不到使用者", 404);
+
+            if (!string.IsNullOrEmpty(dto.Email))
+            {
+                var userWithEmail = await _userRepo.FindByEmailAsync(dto.Email);
+                if (userWithEmail != null && userWithEmail.Id != id)
+                {
+                    return ApiResponse<User>.Fail("Email已被使用", ErrorCodes.ValidationFailed);
+                }
+            }
 
             if (dto.Name != null) existingUser.Name = dto.Name;
             if (dto.Email != null) existingUser.Email = dto.Email;
@@ -68,8 +83,9 @@ namespace user.Services
             _userRepo.Update(existingUser);
             await _userRepo.SaveChangesAsync();
 
-            return ApiResponse<bool>.Ok(true);
+            return ApiResponse<User>.Ok(existingUser, "更新成功");
         }
+
 
         public async Task<ApiResponse<bool>> DeleteUserAsync(Guid id)
         {
