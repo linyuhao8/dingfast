@@ -27,6 +27,7 @@ npm install -g turbo
 
 ```bash
 cd apps/api
+mkdir appsettings.josn
 ```
 
 建立設定檔內容如下（請依照你本地資料庫資訊修改）：
@@ -142,6 +143,11 @@ rm -r Migrations
 
 > ✅ **不要刪除 DbContext.cs 與 Model 類別**
 
+###（選擇性）刪除資料庫：
+
+```bash
+dotnet ef database drop
+```
 ---
 
 ### 2️⃣ 建立新的 Migration
