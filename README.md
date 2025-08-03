@@ -143,6 +143,11 @@ rm -r Migrations
 
 > ✅ **不要刪除 DbContext.cs 與 Model 類別**
 
+###（選擇性）刪除資料庫：
+
+```bash
+dotnet ef database drop
+```
 ---
 
 ### 2️⃣ 建立新的 Migration
