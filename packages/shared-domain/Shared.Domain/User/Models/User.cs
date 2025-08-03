@@ -1,17 +1,29 @@
+using System.ComponentModel.DataAnnotations;
+using Shared.Domain.User.Enums;
 
 namespace Shared.Domain.User.Models;
-
-using Shared.Domain.User.Enums;
 
 public class User
 {
     public Guid Id { get; set; }
-    public string? Name { get; set; }          // 訪客可能沒名字
-    public string? Email { get; set; }         // 訪客可能沒 Email
-    public string? Password { get; set; }      // 訪客無密碼
-    public string? PhoneNumber { get; set; }   // 可能必填（視需求）
-    public string? Address { get; set; }       // 可能必填（視需求）
-    public UserRole Role { get; set; } = UserRole.Guest;
-    public DateTime CreatedAt { get; set; }
-    public DateTime UpdatedAt { get; set; }
+
+    public string? Name { get; set; }
+
+    [Required(ErrorMessage = "Email 為必填")]
+    [EmailAddress(ErrorMessage = "Email 格式錯誤")]
+    public required string Email { get; set; } = string.Empty;
+
+    [Required(ErrorMessage = "密碼為必填")]
+    [MinLength(6, ErrorMessage = "密碼長度至少為 6 個字元")]
+    public required string Password { get; set; } = string.Empty;
+
+    public string? PhoneNumber { get; set; }
+
+    public string? Address { get; set; }
+
+    public UserRole Role { get; set; } = UserRole.Customer;
+
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
+    public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 }

@@ -32,6 +32,7 @@ namespace user.Services
 
         public async Task<ApiResponse<User>> CreateUserAsync(CreateUserDto dto)
         {
+
             var exists = await _userRepo.FindByEmailAsync(dto.Email);
             if (exists != null)
             {

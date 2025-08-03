@@ -6,5 +6,4 @@ public enum UserRole
     Customer,
     Merchant,
     Admin,
-    Guest
 }
