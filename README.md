@@ -27,6 +27,7 @@ npm install -g turbo
 
 ```bash
 cd apps/api
+mkdir appsettings.josn
 ```
 
 建立設定檔內容如下（請依照你本地資料庫資訊修改）：
