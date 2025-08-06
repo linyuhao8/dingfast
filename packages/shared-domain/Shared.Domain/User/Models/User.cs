@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
-using Shared.Domain.User.Enums;
+using Shared.Domain.Users.Enums;
 
-namespace Shared.Domain.User.Models;
+namespace Shared.Domain.Users.Models;
 
 public class User
 {

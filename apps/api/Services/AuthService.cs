@@ -4,9 +4,9 @@ using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using System.Text;
 using user.Repositories;
-using Shared.Domain.User.Dtos;
+using Shared.Domain.Users.Dtos;
 using Api.Commons;
-using Shared.Domain.User.Models;
+using Shared.Domain.Users.Models;
 
 namespace auth.Services
 {

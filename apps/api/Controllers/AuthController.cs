@@ -3,7 +3,7 @@ using Api.Controllers;
 using auth.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Shared.Domain.User.Dtos;
+using Shared.Domain.Users.Dtos;
 using Api.Commons;
 
 [ApiController]

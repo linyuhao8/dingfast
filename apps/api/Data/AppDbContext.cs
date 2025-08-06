@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using Shared.Domain.User.Models;
+using Shared.Domain.Users.Models;
 
 public class AppDbContext : DbContext
 {

@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Shared.Domain.User.Models;
+namespace Shared.Domain.Users.Models;
 
 public class Guest
 {

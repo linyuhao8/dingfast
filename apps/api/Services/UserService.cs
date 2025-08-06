@@ -1,5 +1,5 @@
-using Shared.Domain.User.Models;
-using Shared.Domain.User.Dtos;
+using Shared.Domain.Users.Models;
+using Shared.Domain.Users.Dtos;
 using user.Repositories;
 using System;
 using Api.Commons;

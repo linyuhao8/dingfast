@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using Shared.Domain.User.Models;
-using Shared.Domain.User.Dtos;
+using Shared.Domain.Users.Models;
+using Shared.Domain.Users.Dtos;
 using user.Services;
 using System;
 using System.Threading.Tasks;

@@ -1,4 +1,4 @@
-namespace Shared.Domain.User.Dtos
+namespace Shared.Domain.Users.Dtos
 {
     public class LoginDto
     {

@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
-using Shared.Domain.User.Enums;
+using Shared.Domain.Users.Enums;
 
-namespace Shared.Domain.User.Dtos
+namespace Shared.Domain.Users.Dtos
 {
     // 一般展示使用者資料（回傳用）
     public class UserDto
