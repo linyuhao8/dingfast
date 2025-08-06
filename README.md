@@ -27,7 +27,7 @@ npm install -g turbo
 
 ```bash
 cd apps/api
-mkdir appsettings.josn
+touch appsettings.josn
 ```
 
 建立設定檔內容如下（請依照你本地資料庫資訊修改）：
@@ -106,7 +106,7 @@ npm run dev
 成功後應可看到：
 
 - 前端（Next.js）啟動於： http://localhost:3000
-- 後端（ASP.NET Core API）啟動於： http://localhost:5208（或其他 port）
+- 後端（ASP.NET Core API）啟動於： http://localhost:5208/swagger/index.html（或其他 port）
 
 ---
 
