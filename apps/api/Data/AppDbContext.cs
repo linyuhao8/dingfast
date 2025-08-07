@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Shared.Domain.Users.Models;
 using Shared.Domain.Merchants.Models;
 using Shared.Domain.Images.Models;
+using Shared.Domain.MerchantCategories.Models;
 public class AppDbContext : DbContext
 {
     public AppDbContext(DbContextOptions<AppDbContext> options)
@@ -11,6 +12,8 @@ public class AppDbContext : DbContext
     public DbSet<Guest> Guests { get; set; }
     public DbSet<Merchant> Merchants { get; set; }
     public DbSet<Image> Images { get; set; }
+    public DbSet<MerchantCategoryMain> MerchantCategoriesMain { get; set; }
+    public DbSet<MerchantCategoryMapping> MerchantCategoryMappings { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -36,18 +39,28 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<Image>(entity =>
 {
     entity.HasOne(i => i.User)
-          .WithMany(u => u.Images) // 確保 User.cs 有 ICollection<Image> Images
-          .HasForeignKey(i => i.UserId)
-          .OnDelete(DeleteBehavior.Cascade);
+      .WithMany(u => u.Images) // 確保 User.cs 有 ICollection<Image> Images
+      .HasForeignKey(i => i.UserId)
+      .OnDelete(DeleteBehavior.Cascade);
 
     entity.HasMany(i => i.MerchantsAsLogo)
-          .WithOne(m => m.MerchantLogo)
-          .HasForeignKey(m => m.MerchantLogoId)
-          .OnDelete(DeleteBehavior.SetNull);
+     .WithOne(m => m.MerchantLogo)
+     .HasForeignKey(m => m.MerchantLogoId)
+     .OnDelete(DeleteBehavior.SetNull);
 });
 
+    modelBuilder.Entity<MerchantCategoryMapping>()
+            .HasKey(m => new { m.MerchantId, m.CategoryId });
 
+    modelBuilder.Entity<MerchantCategoryMapping>()
+    .HasOne(m => m.Merchant)
+    .WithMany(m => m.MerchantCategoryMappings)
+    .HasForeignKey(m => m.MerchantId);
 
+    modelBuilder.Entity<MerchantCategoryMapping>()
+    .HasOne(m => m.Category)
+    .WithMany(c => c.MerchantCategoryMappings)
+    .HasForeignKey(m => m.CategoryId);
 
     }
 }
