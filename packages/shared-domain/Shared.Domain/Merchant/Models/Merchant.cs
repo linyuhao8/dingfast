@@ -1,7 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Shared.Domain.Users.Models;
-using Shared.Domain.Common;
+using Shared.Domain.Commons;
+using Shared.Domain.Images.Models;
 // using Shared.Domain.Image.Models;
 // using Shared.Domain.Menu.Models;
 // using Shared.Domain.MerchantCategory.Models;
@@ -25,9 +26,9 @@ public class Merchant : BaseEntity
     [MaxLength(50)]
     public string? Feature { get; set; }
 
-    // [ForeignKey("MerchantLogo")]
-    // public Guid? MerchantLogoId { get; set; }
-    // public Image? MerchantLogo { get; set; }
+    [ForeignKey("MerchantLogo")]
+    public Guid? MerchantLogoId { get; set; }
+    public Image? MerchantLogo { get; set; }
 
     // Location 可以轉型成 Address/GeoLocation class（之後可改）
     public string? Location { get; set; }

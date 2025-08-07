@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Shared.Domain.Users.Models;
 using Shared.Domain.Merchants.Models;
-
+using Shared.Domain.Images.Models;
 public class AppDbContext : DbContext
 {
     public AppDbContext(DbContextOptions<AppDbContext> options)
@@ -10,6 +10,7 @@ public class AppDbContext : DbContext
     public DbSet<User> Users { get; set; }
     public DbSet<Guest> Guests { get; set; }
     public DbSet<Merchant> Merchants { get; set; }
+    public DbSet<Image> Images { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -25,12 +26,28 @@ public class AppDbContext : DbContext
             .HasIndex(g => g.SessionId)
             .IsUnique();
 
-    // Merchant 與 User 的關聯
-    modelBuilder.Entity<Merchant>()
+        // Merchant 與 User 的關聯
+        modelBuilder.Entity<Merchant>()
         .HasOne(m => m.User)
         .WithMany()  // User 沒有 Merchants 集合，避免雙向導航
         .HasForeignKey(m => m.UserId)
         .OnDelete(DeleteBehavior.SetNull);
+
+        modelBuilder.Entity<Image>(entity =>
+{
+    entity.HasOne(i => i.User)
+          .WithMany(u => u.Images) // 確保 User.cs 有 ICollection<Image> Images
+          .HasForeignKey(i => i.UserId)
+          .OnDelete(DeleteBehavior.Cascade);
+
+    entity.HasMany(i => i.MerchantsAsLogo)
+          .WithOne(m => m.MerchantLogo)
+          .HasForeignKey(m => m.MerchantLogoId)
+          .OnDelete(DeleteBehavior.SetNull);
+});
+
+
+
 
     }
 }

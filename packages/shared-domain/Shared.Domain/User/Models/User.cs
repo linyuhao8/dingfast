@@ -1,9 +1,11 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using Shared.Domain.Users.Enums;
-using Shared.Domain.Common;
+using Shared.Domain.Commons;
+using Shared.Domain.Images.Models;
 
 namespace Shared.Domain.Users.Models;
+
 [Table("users")]
 public class User : BaseEntity
 {
@@ -23,5 +25,7 @@ public class User : BaseEntity
     public string? Address { get; set; }
 
     public UserRole Role { get; set; } = UserRole.Customer;
+    
+    public ICollection<Image> Images { get; set; } = new List<Image>();
 
 }

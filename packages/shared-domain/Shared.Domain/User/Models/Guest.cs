@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Shared.Domain.Common;
+using Shared.Domain.Commons;
 
 namespace Shared.Domain.Users.Models;
 [Table("guests")]
