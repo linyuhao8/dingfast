@@ -54,6 +54,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<AuthService>();
+builder.Services.AddScoped<IMerchantCategoryRepository, MerchantCategoryRepository>();
+builder.Services.AddScoped<MerchantCategoryService>();
+
 
 // 啟用 Swagger 產生 OpenAPI 文件
 builder.Services.AddEndpointsApiExplorer();
