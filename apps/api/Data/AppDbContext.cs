@@ -12,7 +12,7 @@ public class AppDbContext : DbContext
     public DbSet<Guest> Guests { get; set; }
     public DbSet<Merchant> Merchants { get; set; }
     public DbSet<Image> Images { get; set; }
-    public DbSet<MerchantCategoryMain> MerchantCategoriesMain { get; set; }
+    public DbSet<MerchantCategory> MerchantCategories { get; set; }
     public DbSet<MerchantCategoryMapping> MerchantCategoryMappings { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

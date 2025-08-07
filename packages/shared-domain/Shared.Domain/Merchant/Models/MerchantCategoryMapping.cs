@@ -15,5 +15,5 @@ public class MerchantCategoryMapping
     public Merchant Merchant { get; set; } = null!;
 
     [ForeignKey(nameof(CategoryId))]
-    public MerchantCategoryMain Category { get; set; } = null!;
+    public MerchantCategory Category { get; set; } = null!;
 }

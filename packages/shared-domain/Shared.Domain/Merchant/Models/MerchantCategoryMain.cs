@@ -5,8 +5,8 @@ using Shared.Domain.Merchants.Models;
 
 namespace Shared.Domain.MerchantCategories.Models;
 
-[Table("merchant_categories_main")]
-public class MerchantCategoryMain
+[Table("merchant_categories")]
+public class MerchantCategory
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
