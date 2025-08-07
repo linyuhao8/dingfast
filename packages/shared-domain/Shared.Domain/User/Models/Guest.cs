@@ -1,15 +1,12 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-
+using Shared.Domain.Common;
 
 namespace Shared.Domain.Users.Models;
 [Table("guests")]
-public class Guest
+public class Guest : BaseEntity
 {
-    [Key]
-    public Guid Id { get; set; } = Guid.NewGuid();
-
     // 用來綁定當前訪客行為，例如 Session Id 或其他識別碼
     public string? SessionId { get; set; }
 
@@ -23,8 +20,5 @@ public class Guest
     [EmailAddress]
     public string? TempEmail { get; set; }
 
-    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-
-    public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 }
 

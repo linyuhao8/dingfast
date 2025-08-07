@@ -1,12 +1,12 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using Shared.Domain.Users.Enums;
+using Shared.Domain.Common;
 
 namespace Shared.Domain.Users.Models;
 [Table("users")]
-public class User
+public class User : BaseEntity
 {
-    public Guid Id { get; set; }
 
     public string? Name { get; set; }
 
@@ -24,7 +24,4 @@ public class User
 
     public UserRole Role { get; set; } = UserRole.Customer;
 
-    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-
-    public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 }
