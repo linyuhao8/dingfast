@@ -30,18 +30,18 @@ public class MerchantCategoryController : ApiBaseController
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody]  MerchantCategoryCreateDto dto)
+    public async Task<IActionResult> Create([FromBody] MerchantCategoryCreateDto dto)
     {
         var result = await _service.CreateAsync(dto);
         return FromApiResponse(result);
     }
 
-[HttpPut("{id}")]
-public async Task<IActionResult> Update(int id, [FromBody] MerchantCategoryUpdateDto dto)
-{
-    var result = await _service.UpdateAsync(id, dto);
-    return FromApiResponse(result);
-}
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Update(int id, [FromBody] MerchantCategoryUpdateDto dto)
+    {
+        var result = await _service.UpdateAsync(id, dto);
+        return FromApiResponse(result);
+    }
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)

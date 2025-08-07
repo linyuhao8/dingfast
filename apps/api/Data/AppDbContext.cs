@@ -49,18 +49,18 @@ public class AppDbContext : DbContext
      .OnDelete(DeleteBehavior.SetNull);
 });
 
-    modelBuilder.Entity<MerchantCategoryMapping>()
-            .HasKey(m => new { m.MerchantId, m.CategoryId });
+        modelBuilder.Entity<MerchantCategoryMapping>()
+                .HasKey(m => new { m.MerchantId, m.CategoryId });
 
-    modelBuilder.Entity<MerchantCategoryMapping>()
-    .HasOne(m => m.Merchant)
-    .WithMany(m => m.MerchantCategoryMappings)
-    .HasForeignKey(m => m.MerchantId);
+        modelBuilder.Entity<MerchantCategoryMapping>()
+        .HasOne(m => m.Merchant)
+        .WithMany(m => m.MerchantCategoryMappings)
+        .HasForeignKey(m => m.MerchantId);
 
-    modelBuilder.Entity<MerchantCategoryMapping>()
-    .HasOne(m => m.Category)
-    .WithMany(c => c.MerchantCategoryMappings)
-    .HasForeignKey(m => m.CategoryId);
+        modelBuilder.Entity<MerchantCategoryMapping>()
+        .HasOne(m => m.Category)
+        .WithMany(c => c.MerchantCategoryMappings)
+        .HasForeignKey(m => m.CategoryId);
 
     }
 }
