@@ -1,8 +1,10 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 
 namespace Shared.Domain.Users.Models;
-
+[Table("guests")]
 public class Guest
 {
     [Key]

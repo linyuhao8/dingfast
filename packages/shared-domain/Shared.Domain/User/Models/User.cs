@@ -1,8 +1,9 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using Shared.Domain.Users.Enums;
 
 namespace Shared.Domain.Users.Models;
-
+[Table("users")]
 public class User
 {
     public Guid Id { get; set; }

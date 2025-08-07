@@ -12,7 +12,7 @@ namespace server.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Guests",
+                name: "guests",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -25,11 +25,11 @@ namespace server.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Guests", x => x.Id);
+                    table.PrimaryKey("PK_guests", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Users",
+                name: "users",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -44,18 +44,49 @@ namespace server.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users", x => x.Id);
+                    table.PrimaryKey("PK_users", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "merchants",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: true),
+                    BusinessName = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: true),
+                    Feature = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
+                    Location = table.Column<string>(type: "text", nullable: true),
+                    BusinessHours = table.Column<string>(type: "text", nullable: true),
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_merchants", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_merchants_users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Guests_SessionId",
-                table: "Guests",
+                name: "IX_guests_SessionId",
+                table: "guests",
                 column: "SessionId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_Email",
-                table: "Users",
+                name: "IX_merchants_UserId",
+                table: "merchants",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_users_Email",
+                table: "users",
                 column: "Email",
                 unique: true);
         }
@@ -64,10 +95,13 @@ namespace server.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Guests");
+                name: "guests");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "merchants");
+
+            migrationBuilder.DropTable(
+                name: "users");
         }
     }
 }
