@@ -19,11 +19,8 @@ export const useLogout = () => {
           message: response.Message || "Logout Failure",
         };
       }
-    } catch (err: any) {
-      return {
-        success: false,
-        message: err?.message || "Logout Error",
-      };
+    } catch (err) {
+      console.log(err);
     }
   };
 

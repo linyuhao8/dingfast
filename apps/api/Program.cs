@@ -24,7 +24,9 @@ builder.Services.AddCors(options =>
     options.AddPolicy("FrontendClient", policy =>
         policy.WithOrigins(frontendUrl ?? "http://localhost:5173") // 允許的網站
               .AllowAnyHeader()
-              .AllowAnyMethod());
+              .AllowAnyMethod()
+                .AllowCredentials()
+              );
 });
 
 
