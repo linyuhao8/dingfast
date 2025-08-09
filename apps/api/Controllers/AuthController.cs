@@ -23,7 +23,7 @@ public class AuthController : ApiBaseController
         if (!result.Success)
         {
             // 失敗時回傳 ApiResponse 失敗格式
-    return BadRequest(ApiResponse<string>.Fail(result.Message ?? "未知錯誤"));
+            return BadRequest(ApiResponse<string>.Fail(result.Message ?? "未知錯誤"));
 
         }
 
@@ -55,5 +55,21 @@ public class AuthController : ApiBaseController
 
         return Ok(ApiResponse<string>.Ok("登出成功"));
     }
+
+    [HttpGet("check-cookies")]
+    public IActionResult CheckCookies()
+    {
+        var hasToken = Request.Cookies.TryGetValue("dingfast-jwt-token", out var tokenValue);
+        var response = new ApiResponse<bool>
+        {
+            Success = true,
+            Data = hasToken, // true 或 false
+            Message = hasToken ? "Token exists" : "Token not found"
+        };
+
+
+        return Ok(ApiResponse<bool>.Ok(hasToken, hasToken ? "Token exists" : "Token not found"));
+    }
+
 
 }
