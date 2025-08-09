@@ -1,4 +1,3 @@
-
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
@@ -27,18 +26,18 @@ namespace auth.Services
 
             if (user == null)
                 return ApiResponse<string>.Fail("找不到此 Email");
-            //檢查hash password
+
+            // 檢查 hash password
             bool isValid = BCrypt.Net.BCrypt.Verify(password, user.Password);
             if (!isValid)
                 return ApiResponse<string>.Fail("密碼錯誤");
+
             var token = GenerateToken(user);
-
             return ApiResponse<string>.Ok(token);
-
         }
+
         public string GenerateToken(User user)
         {
-            // 產生 JWT token
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.UTF8.GetBytes(_config["Jwt:Key"]!);
 
@@ -46,16 +45,51 @@ namespace auth.Services
             {
                 Subject = new ClaimsIdentity(new[]
                 {
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Email, user.Email ?? ""),
-                new Claim(ClaimTypes.Role, user.Role.ToString())
-            }),
+                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                    new Claim(ClaimTypes.Email, user.Email ?? ""),
+                    new Claim(ClaimTypes.Role, user.Role.ToString())
+                }),
                 Expires = DateTime.UtcNow.AddDays(7),
+                Issuer = _config["Jwt:Issuer"],
+                Audience = _config["Jwt:Audience"],
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
+        }
+
+        public bool ValidateToken(string? token)
+        {
+            if (string.IsNullOrEmpty(token))
+                return false;
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.UTF8.GetBytes(_config["Jwt:Key"]!);
+
+            try
+            {
+                tokenHandler.ValidateToken(token, new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+
+                    ValidateIssuer = true,
+                    ValidIssuer = _config["Jwt:Issuer"],
+
+                    ValidateAudience = true,
+                    ValidAudience = _config["Jwt:Audience"],
+
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.Zero
+                }, out SecurityToken validatedToken);
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

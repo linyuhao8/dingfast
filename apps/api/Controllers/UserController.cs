@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Authorization;
 
 [ApiController]
 [Route("api/users")]
+
+//[Authorize(Roles = "Admin")]
 public class UserController : ApiBaseController
 {
     private readonly UserService _userService;
@@ -25,6 +27,7 @@ public class UserController : ApiBaseController
     }
 
     [HttpGet("{id}")]
+    [Authorize]
     public async Task<IActionResult> GetUser(Guid id)
     {
         var response = await _userService.GetUserByIdAsync(id);

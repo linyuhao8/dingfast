@@ -48,7 +48,22 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             IssuerSigningKey = new SymmetricSecurityKey(
                 Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
         };
+        options.Events = new JwtBearerEvents
+        {
+            OnMessageReceived = context =>
+            {
+                if (context.Request.Cookies.ContainsKey("dingfast-jwt-token"))
+                    context.Token = context.Request.Cookies["dingfast-jwt-token"];
+                return Task.CompletedTask;
+            },
+            OnAuthenticationFailed = context =>
+    {
+        Console.WriteLine("Authentication failed: " + context.Exception.Message);
+        return Task.CompletedTask;
+    }
+        };
     });
+Console.WriteLine($"Jwt Audience: {builder.Configuration["Jwt:Audience"]}");
 
 
 // 註冊 User 相關服務
@@ -72,7 +87,7 @@ builder.Services.AddSwaggerGen(c =>
         Version = "v1"
     });
 });
-
+builder.Services.AddAuthorization();
 var app = builder.Build();
 
 // 測試資料庫連線

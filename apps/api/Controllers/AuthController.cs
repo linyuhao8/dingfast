@@ -55,21 +55,22 @@ public class AuthController : ApiBaseController
 
         return Ok(ApiResponse<string>.Ok("登出成功"));
     }
-
-    [HttpGet("check-cookies")]
-    public IActionResult CheckCookies()
+    // 範例檢查 token 是否有效的 CheckAuth API
+    [HttpGet("check-auth")]
+    public IActionResult CheckAuth()
     {
         var hasToken = Request.Cookies.TryGetValue("dingfast-jwt-token", out var tokenValue);
-        var response = new ApiResponse<bool>
-        {
-            Success = true,
-            Data = hasToken, // true 或 false
-            Message = hasToken ? "Token exists" : "Token not found"
-        };
+        if (!hasToken)
+            return Unauthorized(ApiResponse<string>.Fail("Token not found"));
 
+        // 這邊加上驗證 token 是否有效邏輯
+        var isValid = _authService.ValidateToken(tokenValue);
+        if (!isValid)
+            return Unauthorized(ApiResponse<string>.Fail("Invalid or expired token"));
 
-        return Ok(ApiResponse<bool>.Ok(hasToken, hasToken ? "Token exists" : "Token not found"));
+        return Ok(ApiResponse<bool>.Ok(true, "Token is valid"));
     }
+
 
 
 }
