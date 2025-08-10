@@ -6,6 +6,7 @@ using user.Repositories;
 using Shared.Domain.Users.Dtos;
 using Api.Commons;
 using Shared.Domain.Users.Models;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace auth.Services
 {
@@ -19,22 +20,38 @@ namespace auth.Services
             _userRepo = userRepo;
             _config = config;
         }
-
-        public async Task<ApiResponse<string>> LoginAsync(string email, string password)
+        public async Task<ApiResponse<LoginResultDto>> LoginAsync(string email, string password)
         {
             var user = await _userRepo.FindByEmailAsync(email);
 
             if (user == null)
-                return ApiResponse<string>.Fail("找不到此 Email");
+                return ApiResponse<LoginResultDto>.Fail("找不到此 Email");
 
             // 檢查 hash password
             bool isValid = BCrypt.Net.BCrypt.Verify(password, user.Password);
             if (!isValid)
-                return ApiResponse<string>.Fail("密碼錯誤");
+                return ApiResponse<LoginResultDto>.Fail("密碼錯誤");
 
             var token = GenerateToken(user);
-            return ApiResponse<string>.Ok(token);
+
+            var userDto = new UserDto
+            {
+                Id = user.Id,
+                Email = user.Email,
+                Role = user.Role,
+                Name = user.Name!,
+                PhoneNumber = user.PhoneNumber,
+                Address = user.Address
+            };
+            var result = new LoginResultDto
+            {
+                User = userDto,
+                Token = token
+            };
+
+            return ApiResponse<LoginResultDto>.Ok(result, "登入成功");
         }
+
 
         public string GenerateToken(User user)
         {

@@ -3,7 +3,7 @@ namespace Shared.Domain.Users.Enums;
 
 public enum UserRole
 {
-    Customer,
-    Merchant,
-    Admin,
+    Customer = 0,
+    Merchant = 1,
+    Admin = 2,
 }

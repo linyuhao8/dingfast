@@ -8,6 +8,8 @@ using System.Text;
 using auth.Services;
 using Application.Merchants.Services;
 using Application.Merchants.Repositories;
+using System.Text.Json.Serialization;
+
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,7 +19,12 @@ var frontendUrl = builder.Configuration["FrontendUrl"];
 
 
 // 註冊 Controller 服務
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        // 把 enum 轉成字串輸出
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    });
 //cors設定
 builder.Services.AddCors(options =>
 {

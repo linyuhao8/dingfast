@@ -36,7 +36,9 @@ public class AuthController : ApiBaseController
 
         }
 
-        var token = result.Data!;
+        var token = result.Data!.Token;
+        var user = result.Data!.User;
+
         Response.Cookies.Append("dingfast-jwt-token", token, new CookieOptions
         {
             HttpOnly = true,
@@ -47,7 +49,7 @@ public class AuthController : ApiBaseController
         });
 
         // 成功時回傳 ApiResponse 成功格式（可自訂訊息）
-        return Ok(ApiResponse<string>.Ok("登入成功"));
+        return Ok(ApiResponse<UserDto>.Ok(user, "登入成功"));
     }
 
     [HttpPost("logout")]
