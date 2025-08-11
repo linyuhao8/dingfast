@@ -22,7 +22,7 @@ import Navbar from "@/components/public/Navbar";
 //axios
 import axios, { AxiosError } from "axios";
 import { User } from "@/types/user";
-import { ApiResponse } from "@/types/api";
+import { ApiResponse } from "@/types/api-response";
 
 export default function Login() {
   const router = useRouter();

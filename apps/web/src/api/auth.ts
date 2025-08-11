@@ -1,4 +1,4 @@
-import { ApiResponse } from "@/types/api";
+import { ApiResponse } from "@/types/api-response";
 import { User } from "@/types/user";
 // services/api/auth.js
 export const authApi = {

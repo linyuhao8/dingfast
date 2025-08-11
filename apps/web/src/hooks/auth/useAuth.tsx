@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { api } from "@/api";
 import { getCookie, setCookie, deleteCookie } from "cookies-next/client";
 import { User } from "@/types/user";
-import { ApiResponse } from "@/types/api";
+import { ApiResponse } from "@/types/api-response";
 
 const useAuth = () => {
   // 是否已通過認證，初始設 null 表示還沒判斷
@@ -52,10 +52,10 @@ const useAuth = () => {
 
         if (!isMounted) return;
 
-        if (data.Success && data.Data) {
+        if (data.success && data.data) {
           setIsAuthenticated(true);
-          setUser(data.Data);
-          setCookie("order-user", JSON.stringify(data.Data), {
+          setUser(data.data);
+          setCookie("order-user", JSON.stringify(data.data), {
             maxAge: 60 * 60 * 24 * 7,
             path: "/",
           });
